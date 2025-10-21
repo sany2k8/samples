@@ -25,7 +25,7 @@ subgraph Manager
     direction TB
     B --> C[IpvRegwCidwRequest]
     B --> D[IpvRegwPricerInterface]
-    B --> E[Output/SFTP]
+    B --> |output| E[Output/SFTP]
 end
 
 
@@ -34,10 +34,10 @@ end
 %% =============================
 subgraph PricerInterface
     direction LR
-    D --> F[IpvRegwPricerFactory]
-    D --> G[IpvRegwPricerUtil]
-    D --> H[IpvRegwPricerRule]
-    D --> I[Config: IpvRegwPricerColumns, IpvRegwRequest, IpvRegwResponse, IpvRegwKwargs, IpvRegwPriceCode, IpvRegwPricerType]
+    D --> |pricing logic| F[IpvRegwPricerFactory]
+    D --> |utils/config| G[IpvRegwPricerUtil]
+    D --> |rules/config| H[IpvRegwPricerRule]
+    D --> |rules/config| I[Config: IpvRegwPricerColumns, IpvRegwRequest, IpvRegwResponse, IpvRegwKwargs, IpvRegwPriceCode, IpvRegwPricerType]
 end
 
 
@@ -46,11 +46,11 @@ end
 %% =============================
 subgraph PricerFactory
     direction LR
-    F --> J[IpvRegwPricerMuni]
-    F --> K[IpvRegwPricerMbs]
-    F --> L[IpvRegwPricerVisaB]
-    F --> M[IpvRegwPricerChineseEquity]
-    F --> N[IpvRegwPricerFixedIncome]
+    F --> |pricer type| J[IpvRegwPricerMuni]
+    F --> |pricer type| K[IpvRegwPricerMbs]
+    F --> |pricer type| L[IpvRegwPricerVisaB]
+    F --> |pricer type| M[IpvRegwPricerChineseEquity]
+    F --> |pricer type| N[IpvRegwPricerFixedIncome]
 end
 
 
@@ -59,17 +59,16 @@ end
 %% =============================
 C -->|request data| B
 B -->|validated data| D
-D -->|pricing logic| F
-F -->|pricer type| J
-F -->|pricer type| K
-F -->|pricer type| L
-F -->|pricer type| M
-F -->|pricer type| N
-D -->|utils/config| G
-D -->|rules/config| H
-D -->|rules/config| I
+%%D -->|pricing logic| F
+%% F -->|pricer type| J
+%%F -->|pricer type| K
+%%F -->|pricer type| L
+%%F -->|pricer type| M
+%%F -->|pricer type| N
+%%D -->|utils/config| G
+%%D -->|rules/config| H
+%%D -->|rules/config| I
 D -->|results| B
-B -->|output| E
 
 
 %% =============================
